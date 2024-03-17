@@ -1,24 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
-import { getDoc, deleteDoc, doc, collection } from "firebase/firestore";
+import { getDocs, deleteDoc, doc, collection } from "firebase/firestore";
 
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
+  const [messages, setMessages] = useState();
 
+ const getMessages = async () => {const querySnapshot = await getDocs(collection(db, "cities"));
+ querySnapshot.forEach((doc) => {
+   // doc.data() is never undefined for query doc snapshots
+   console.log(doc.id, " => ", doc.data());
+ });  
+ setMessages(messages);
+ }
  
-  const getMessageRef = async () => {
-    const messageRef = collection(db, "messages");
-    const docSnap = await getDoc(doc(db, "messages", messageRef.id));
-  if (docSnap.exists()) {
-    console.log("Document ID:", docSnap.id);
-    // deleteMessage(docSnap.id);
-    // Perform further actions with the document ID as needed
-  } else {
-    console.log("Document does not exist");
-  }
-    }
+ useEffect(() => {
+   getMessages();
+ }, []);
+  // const getMessageRef = async () => {
+  //   const messageRef = collection(db, "messages");
+  //   const docSnap = await getDoc(doc(db, "messages", messageRef.id));
+  // if (docSnap.exists()) {
+  //   console.log("Document ID:", docSnap.id);
+  //   // deleteMessage(docSnap.id);
+  //   // Perform further actions with the document ID as needed
+  // } else {
+  //   console.log("Document does not exist");
+  // }
+  //   }
 
 
 
@@ -54,12 +65,12 @@ const Message = ({ message }) => {
       new Date(message.createdAt.seconds * 1000).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })
     )}</span> </p>
         <p className="user-message">{message.text}</p>
-        <button
+        {/* <button
           className="delete-message"
           onClick={() => getMessageRef()}
         >
           x
-        </button>
+        </button> */}
 
         
       </div>
