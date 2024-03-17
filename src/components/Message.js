@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Swal from "sweetalert2"
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
@@ -12,6 +13,39 @@ const Message = ({ message }) => {
 
   const scroll = useRef();
 
+  const handleEdit = (id) => {
+    const [message] = messages.filter((message) => message.id === id);
+    setSelectedMessage(message);
+    setIsEditing(true);
+  };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.value) {
+        const [message] = messages.filter((message) => message.id === id);
+        deleteDoc(doc(db, "messages", id));
+  
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: 'Message has been deleted.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+  
+        const messagesCopy = messages.filter((message) => message.id !== id);
+        setMessages(messagesCopy);
+      }
+    });
+  };
+
 
   useEffect(() => {
     const q = query(
@@ -19,40 +53,7 @@ const Message = ({ message }) => {
       orderBy("createdAt", "desc"),
       limit(50)
     );
-    const handleEdit = id => {
-      const [message] = messages.filter(message => message.id === id);
-      setSelectedMessage(message);
-      setIsEditing(true);
-    };
-  
-    const handleDelete = id => {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-      }).then(result => {
-        if (result.value) {
-          const [message] = messages.filter(message => message.id === id);
-  
-          deleteDoc(doc(db, "messages", id));
-  
-          Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: 'Message has been deleted.',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-  
-          const messagesCopy = messages.filter(message => message.id !== id);
-          setMessages(messagesCopy);
-        }
-      });
-    };
-
+    
     const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
       const fetchedMessages = [];
       QuerySnapshot.forEach((doc) => {
