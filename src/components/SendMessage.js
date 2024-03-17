@@ -3,7 +3,7 @@ import { auth, db } from "../firebase";
 import { addDoc, collection, serverTimestamp, doc, getDoc, deleteDoc } from "firebase/firestore";
 import axios from 'axios';
 
-const SendMessage = (({ scroll }) => {
+const SendMessage = ({ scroll }) => {
   const [message, setMessage] = useState("");
   const [quote, setQuote] = useState({});
 
@@ -25,7 +25,7 @@ const SendMessage = (({ scroll }) => {
 
     const { uid, displayName, photoURL } = auth.currentUser;
 
-    const messageRef = await addDoc(collection(db, "messages"), {
+    await addDoc(collection(db, "messages"), {
       text: message ? message : quote.quote,
       name: displayName,
       avatar: photoURL,
@@ -33,20 +33,10 @@ const SendMessage = (({ scroll }) => {
       uid,
     });
 
-    const docSnap = await getDoc(doc(db, "messages", messageRef.id));
-    if (docSnap.exists()) {
-      console.log("Document ID:", docSnap.id);
-      deleteMessage(docSnap.id);
-      // Perform further actions with the document ID as needed
-    } else {
-      console.log("Document does not exist");
-    }
 
     setMessage("");
     setQuote({});
-    if (scroll && scroll.current) {
-      scroll.current.scrollIntoView({ behavior: "smooth" });
-    }
+    scroll.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const deleteMessage = async (messageId) => {
@@ -76,6 +66,6 @@ const SendMessage = (({ scroll }) => {
       <button type="button" onClick={getQuote}>Get Quote</button>
     </form>
   );
-});
+};
 
 export default SendMessage;

@@ -2,11 +2,29 @@ import React from "react";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
-import { deleteDoc, updateDoc, collection } from "firebase/firestore";
-import deleteMessage from "../components/SendMessage";
+import { getDoc, deleteDoc, doc, collection } from "firebase/firestore";
 
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
+
+  const messageRef =  doc(collection(db, "messages"));
+
+  const deleteMessage = async () => {
+    try {
+      const docSnap = await getDoc(doc(db, "messages", messageRef.id));
+    if (docSnap.exists()) {
+      console.log("Document ID:", docSnap.id);
+      // Perform further actions with the document ID as needed
+    } else {
+      console.log("Document does not exist");
+    }
+      console.log("Message deleted successfully");
+    } catch (error) {
+      console.error("Error deleting message: ", error);
+    }
+  };
+  
+  
 
 
   return (
