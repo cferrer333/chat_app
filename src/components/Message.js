@@ -7,22 +7,36 @@ import { getDoc, deleteDoc, doc, collection } from "firebase/firestore";
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
 
-  const messageRef =  doc(collection(db, "messages"));
+ 
+  const getMessageRef = async () => {
+    const messageRef = doc(db, "messages");
+    const docSnap = await getDoc(doc(db, "messages", messageRef.id));
+  if (docSnap.exists()) {
+    console.log("Document ID:", docSnap.id);
+    // deleteMessage(docSnap.id);
+    // Perform further actions with the document ID as needed
+  } else {
+    console.log("Document does not exist");
+  }
+    }
+  }
 
-  const deleteMessage = async () => {
-    try {
-      const docSnap = await getDoc(doc(db, "messages", messageRef.id));
-    if (docSnap.exists()) {
-      console.log("Document ID:", docSnap.id);
-      // Perform further actions with the document ID as needed
-    } else {
-      console.log("Document does not exist");
-    }
-      console.log("Message deleted successfully");
-    } catch (error) {
-      console.error("Error deleting message: ", error);
-    }
-  };
+
+  // const deleteMessage = async (messageId) => {
+  //   try {
+  //     const docSnap = await getDoc(doc(db, "messages", messageRef.id));
+  //   if (docSnap.exists()) {
+  //     console.log("Document ID:", docSnap.id);
+  //     deleteMessage(docSnap.id);
+  //     // Perform further actions with the document ID as needed
+  //   } else {
+  //     console.log("Document does not exist");
+  //   }
+  //     console.log("Message deleted successfully");
+  //   } catch (error) {
+  //     console.error("Error deleting message: ", error);
+  //   }
+  // };
   
   
 
@@ -42,7 +56,7 @@ const Message = ({ message }) => {
         <p className="user-message">{message.text}</p>
         <button
           className="delete-message"
-          onClick={() => deleteMessage()}
+          onClick={() => getMessageRef()}
         >
           x
         </button>
