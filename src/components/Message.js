@@ -14,7 +14,7 @@ const Message = ({ message }) => {
 
   const scroll = useRef();
   
-  const id = selectedMessage.id;
+  const id = selectedMessage ? selectedMessage.id : null;
 
   const handleUpdate = async (e) => {
 
