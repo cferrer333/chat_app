@@ -3,15 +3,51 @@ import Swal from "sweetalert2"
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
-import { getDocs, deleteDoc, doc, collection, query, orderBy, limit, onSnapshot, } from "firebase/firestore";
+import { deleteDoc, doc, collection, query, orderBy, limit, onSnapshot, updateDoc } from "firebase/firestore";
 
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState(selectedMessage.text);
 
   const scroll = useRef();
+
+  const id = selectedMessage.id;
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    if (!text) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Input required.',
+        showConfirmButton: true,
+      });
+    }
+
+    const message = {
+      text: text,
+    };
+
+    await updateDoc(doc(db, "messages", id), {
+      ...message
+    });
+
+    setMessages(messages);
+    setIsEditing(false);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Updated!',
+      text: 'Message has been updated.',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+
 
   const handleEdit = (id) => {
     if (message.uid === user.uid) {
@@ -27,6 +63,28 @@ const Message = ({ message }) => {
       });
     }
   };
+
+  const showEditForm = () => {
+    Swal.fire({
+      html: `
+        <form id="editForm" onSubmit="return false;">
+          <label for="messageInput">Edit Message</label>
+          <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage.text}" />
+        </form>
+      `,
+      showCancelButton: true,
+      showCloseButton: true,
+      focusConfirm: false,
+      preConfirm: () => {
+        const newText = document.getElementById('messageInput').value;
+        setSelectedMessage({ ...selectedMessage, text: newText });
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleUpdate();
+      }
+    });
+  }
   const handleDelete = (id) => {
     if (message.uid === user.uid) {
       Swal.fire({
@@ -81,50 +139,6 @@ const Message = ({ message }) => {
     });
     return () => unsubscribe;
   }, []);
-
-//  const getMessages = async () => {const querySnapshot = await getDocs(collection(db, "messages"));
-//  querySnapshot.forEach((doc) => {
-//    // doc.data() is never undefined for query doc snapshots
-//    console.log(doc.id, " => ", doc.data());
-//  });  
-//  setMessages(messages);
-//  }
- 
-//  useEffect(() => {
-//    getMessages();
-//  }, []);
-  // const getMessageRef = async () => {
-  //   const messageRef = collection(db, "messages");
-  //   const docSnap = await getDoc(doc(db, "messages", messageRef.id));
-  // if (docSnap.exists()) {
-  //   console.log("Document ID:", docSnap.id);
-  //   // deleteMessage(docSnap.id);
-  //   // Perform further actions with the document ID as needed
-  // } else {
-  //   console.log("Document does not exist");
-  // }
-  //   }
-
-
-
-  // const deleteMessage = async (messageId) => {
-  //   try {
-  //     const docSnap = await getDoc(doc(db, "messages", messageRef.id));
-  //   if (docSnap.exists()) {
-  //     console.log("Document ID:", docSnap.id);
-  //     deleteMessage(docSnap.id);
-  //     // Perform further actions with the document ID as needed
-  //   } else {
-  //     console.log("Document does not exist");
-  //   }
-  //     console.log("Message deleted successfully");
-  //   } catch (error) {
-  //     console.error("Error deleting message: ", error);
-  //   }
-  // };
-  
-  
-
 
   return (
     <div
