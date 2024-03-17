@@ -8,7 +8,7 @@ const Message = ({ message }) => {
   const [user] = useAuthState(auth);
   const [messages, setMessages] = useState();
 
- const getMessages = async () => {const querySnapshot = await getDocs(collection(db, "cities"));
+ const getMessages = async () => {const querySnapshot = await getDocs(collection(db, "messages"));
  querySnapshot.forEach((doc) => {
    // doc.data() is never undefined for query doc snapshots
    console.log(doc.id, " => ", doc.data());
