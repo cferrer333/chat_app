@@ -19,7 +19,7 @@ const Message = ({ message }) => {
     console.log("Document does not exist");
   }
     }
-  }
+
 
 
   // const deleteMessage = async (messageId) => {
