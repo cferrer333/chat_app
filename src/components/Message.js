@@ -13,10 +13,11 @@ const Message = ({ message }) => {
   const [text, setText] = useState(selectedMessage);
 
   const scroll = useRef();
-
+  
   const id = selectedMessage.id;
 
   const handleUpdate = async (e) => {
+
     e.preventDefault();
 
     if (!text) {
