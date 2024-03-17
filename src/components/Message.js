@@ -72,7 +72,7 @@ const Message = ({ message }) => {
       html: `
         <form id="editForm" onSubmit="return false;">
           <label for="messageInput">Edit Message</label>
-          <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage ? selectedMessage.text : null}" />
+          <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage ? selectedMessage.text : selectedMessage.text}" />
         </form>
       `,
       showCancelButton: true,
