@@ -44,7 +44,8 @@ const SendMessage = ({ scroll }) => {
 
     setMessage("");
     setQuote({});
-    scroll.current.scrollIntoView({ behavior: "smooth" });
+    if (scroll && scroll.current) {
+      scroll.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const deleteMessage = async (messageId) => {
