@@ -9,7 +9,7 @@ const Message = ({ message }) => {
 
  
   const getMessageRef = async () => {
-    const messageRef = doc(db, "messages");
+    const messageRef = collection(db, "messages");
     const docSnap = await getDoc(doc(db, "messages", messageRef.id));
   if (docSnap.exists()) {
     console.log("Document ID:", docSnap.id);
