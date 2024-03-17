@@ -8,9 +8,14 @@ import { deleteDoc, updateDoc, collection } from "firebase/firestore";
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
 
-  // const deleteMessage = async (messageId) => {
-  //   await deleteDoc(collection(db, "messages/", + messageId, ""));
-  // }
+  const deleteMessage = async (messageId) => {
+    try {
+      await deleteDoc(doc(db, "messages", messageId));
+      console.log("Message deleted successfully");
+    } catch (error) {
+      console.error("Error deleting message: ", error);
+    }
+  };
 
   return (
     <div
@@ -25,7 +30,12 @@ const Message = ({ message }) => {
       new Date(message.createdAt.seconds * 1000).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })
     )}</span> </p>
         <p className="user-message">{message.text}</p>
-        {/* <button className="delete-message" onClick={() => deleteMessage(message.id)}>x</button> */}
+        <button
+          className="delete-message"
+          onClick={() => deleteMessage(message.id)}
+        >
+          x
+        </button>
 
         
       </div>

@@ -44,6 +44,7 @@ const SendMessage = ({ scroll }) => {
     scroll.current.scrollIntoView({ behavior: "smooth" });
 
   };
+
   
 
   
