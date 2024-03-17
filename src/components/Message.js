@@ -3,19 +3,11 @@ import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
 import { deleteDoc, updateDoc, collection } from "firebase/firestore";
-
+import deleteMessage from "../components/SendMessage";
 
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
 
-  const deleteMessage = async (messageId) => {
-    try {
-      await deleteDoc(doc(db, "messages", messageId));
-      console.log("Message deleted successfully");
-    } catch (error) {
-      console.error("Error deleting message: ", error);
-    }
-  };
 
   return (
     <div
@@ -32,7 +24,7 @@ const Message = ({ message }) => {
         <p className="user-message">{message.text}</p>
         <button
           className="delete-message"
-          onClick={() => deleteMessage(message.id)}
+          onClick={() => deleteMessage()}
         >
           x
         </button>
