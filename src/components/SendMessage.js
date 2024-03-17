@@ -3,7 +3,7 @@ import { auth, db } from "../firebase";
 import { addDoc, collection, serverTimestamp, doc, getDoc, deleteDoc } from "firebase/firestore";
 import axios from 'axios';
 
-const SendMessage = ({ scroll }) => {
+const SendMessage = (({ scroll }) => {
   const [message, setMessage] = useState("");
   const [quote, setQuote] = useState({});
 
@@ -46,6 +46,7 @@ const SendMessage = ({ scroll }) => {
     setQuote({});
     if (scroll && scroll.current) {
       scroll.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const deleteMessage = async (messageId) => {
@@ -75,6 +76,6 @@ const SendMessage = ({ scroll }) => {
       <button type="button" onClick={getQuote}>Get Quote</button>
     </form>
   );
-};
+});
 
 export default SendMessage;
