@@ -55,6 +55,7 @@ const Message = ({ message }) => {
       const [message] = messages.filter((message) => message.id === id);
       setSelectedMessage(message);
       setIsEditing(true);
+      showEditForm();
     } else {
       // Add a notification that the user can only edit their own messages
       Swal.fire({
