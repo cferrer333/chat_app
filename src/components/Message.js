@@ -2,11 +2,69 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
-import { getDocs, deleteDoc, doc, collection } from "firebase/firestore";
+import { getDocs, deleteDoc, doc, collection, query, orderBy, limit, onSnapshot, } from "firebase/firestore";
 
-const Message = ({ message, handleEdit, handleDelete }) => {
+const Message = ({ message }) => {
   const [user] = useAuthState(auth);
-  const [messages, setMessages] = useState();
+  const [messages, setMessages] = useState([]);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const scroll = useRef();
+
+
+  useEffect(() => {
+    const q = query(
+      collection(db, "messages"),
+      orderBy("createdAt", "desc"),
+      limit(50)
+    );
+    const handleEdit = id => {
+      const [message] = messages.filter(message => message.id === id);
+      setSelectedMessage(message);
+      setIsEditing(true);
+    };
+  
+    const handleDelete = id => {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+      }).then(result => {
+        if (result.value) {
+          const [message] = messages.filter(message => message.id === id);
+  
+          deleteDoc(doc(db, "messages", id));
+  
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'Message has been deleted.',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+  
+          const messagesCopy = messages.filter(message => message.id !== id);
+          setMessages(messagesCopy);
+        }
+      });
+    };
+
+    const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
+      const fetchedMessages = [];
+      QuerySnapshot.forEach((doc) => {
+        fetchedMessages.push({ ...doc.data(), id: doc.id });
+      });
+      const sortedMessages = fetchedMessages.sort(
+        (a, b) => a.createdAt - b.createdAt
+      );
+      setMessages(sortedMessages);
+    });
+    return () => unsubscribe;
+  }, []);
 
 //  const getMessages = async () => {const querySnapshot = await getDocs(collection(db, "messages"));
 //  querySnapshot.forEach((doc) => {
