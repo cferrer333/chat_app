@@ -4,21 +4,21 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
 import { getDocs, deleteDoc, doc, collection } from "firebase/firestore";
 
-const Message = ({ message }) => {
+const Message = ({ message, handleEdit, handleDelete }) => {
   const [user] = useAuthState(auth);
   const [messages, setMessages] = useState();
 
- const getMessages = async () => {const querySnapshot = await getDocs(collection(db, "messages"));
- querySnapshot.forEach((doc) => {
-   // doc.data() is never undefined for query doc snapshots
-   console.log(doc.id, " => ", doc.data());
- });  
- setMessages(messages);
- }
+//  const getMessages = async () => {const querySnapshot = await getDocs(collection(db, "messages"));
+//  querySnapshot.forEach((doc) => {
+//    // doc.data() is never undefined for query doc snapshots
+//    console.log(doc.id, " => ", doc.data());
+//  });  
+//  setMessages(messages);
+//  }
  
- useEffect(() => {
-   getMessages();
- }, []);
+//  useEffect(() => {
+//    getMessages();
+//  }, []);
   // const getMessageRef = async () => {
   //   const messageRef = collection(db, "messages");
   //   const docSnap = await getDoc(doc(db, "messages", messageRef.id));
@@ -67,9 +67,15 @@ const Message = ({ message }) => {
         <p className="user-message">{message.text}</p>
         <button
           className="delete-message"
-          onClick={() => getMessages()}
+          onClick={() => handleDelete(message.id)}
         >
           x
+        </button>
+        <button
+          className="edit-message"
+          onClick={() => handleEdit(message.id)}
+        >
+          Edit
         </button>
 
         
