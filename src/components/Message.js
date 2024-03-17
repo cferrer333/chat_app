@@ -10,7 +10,7 @@ const Message = ({ message }) => {
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState(selectedMessage.text);
+  const [text, setText] = useState(selectedMessage);
 
   const scroll = useRef();
 
