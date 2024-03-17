@@ -17,8 +17,9 @@ const Message = ({ message }) => {
   const id = selectedMessage ? selectedMessage.id : null;
 
   const handleUpdate = async (e) => {
-
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
 
     if (!text) {
       return Swal.fire({
@@ -83,7 +84,7 @@ const Message = ({ message }) => {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        handleUpdate();
+        handleUpdate(result);
       }
     });
   }
