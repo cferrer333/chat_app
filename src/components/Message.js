@@ -65,12 +65,12 @@ const Message = ({ message }) => {
       new Date(message.createdAt.seconds * 1000).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })
     )}</span> </p>
         <p className="user-message">{message.text}</p>
-        {/* <button
+        <button
           className="delete-message"
-          onClick={() => getMessageRef()}
+          onClick={() => getMessages()}
         >
           x
-        </button> */}
+        </button>
 
         
       </div>
