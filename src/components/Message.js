@@ -14,38 +14,53 @@ const Message = ({ message }) => {
   const scroll = useRef();
 
   const handleEdit = (id) => {
-    const [message] = messages.filter((message) => message.id === id);
-    setSelectedMessage(message);
-    setIsEditing(true);
+    if (message.uid === user.uid) {
+      const [message] = messages.filter((message) => message.id === id);
+      setSelectedMessage(message);
+      setIsEditing(true);
+    } else {
+      // Add a notification that the user can only edit their own messages
+      Swal.fire({
+        icon: 'error',
+        title: 'Permission denied',
+        text: 'You can only edit your own messages.',
+      });
+    }
   };
-
   const handleDelete = (id) => {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
-    }).then((result) => {
-      if (result.value) {
-        const [message] = messages.filter((message) => message.id === id);
-        deleteDoc(doc(db, "messages", id));
-  
-        Swal.fire({
-          icon: 'success',
-          title: 'Deleted!',
-          text: 'Message has been deleted.',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-  
-        const messagesCopy = messages.filter((message) => message.id !== id);
-        setMessages(messagesCopy);
-      }
-    });
+    if (message.uid === user.uid) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+      }).then((result) => {
+        if (result.value) {
+          deleteDoc(doc(db, "messages", id));
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'Message has been deleted.',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          
+          const messagesCopy = messages.filter((message) => message.id !== id);
+          setMessages(messagesCopy);
+        }
+      });
+    } else {
+      // Add a notification that the user can only delete their own messages
+      Swal.fire({
+        icon: 'error',
+        title: 'Permission denied',
+        text: 'You can only delete your own messages.',
+      });
+    }
   };
-
 
   useEffect(() => {
     const q = query(
