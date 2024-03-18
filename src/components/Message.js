@@ -16,9 +16,9 @@ const Message = ({ message }) => {
   
   const id = selectedMessage ? selectedMessage.id : null;
 
-  const handleUpdate = async (e) => {
-    if (e) {
-      e.preventDefault();
+  const handleUpdate = async (event) => {
+    if (event) {
+      event.preventDefault();
     }
 
     if (!text) {
@@ -70,9 +70,9 @@ const Message = ({ message }) => {
   const showEditForm = () => {
     Swal.fire({
       html: `
-        <form id="editForm" onSubmit="return false;">
+        <form id="editForm" onSubmit="${(event) => handleUpdate(event)}">
           <label for="messageInput">Edit Message</label>
-          <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage ? selectedMessage.text : selectedMessage.text}" />
+          <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage.text}" placeholder="Edit Message" />
         </form>
       `,
       showCancelButton: true,
@@ -84,7 +84,7 @@ const Message = ({ message }) => {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        handleUpdate(result.event);
+        handleUpdate();
       }
     });
   }
