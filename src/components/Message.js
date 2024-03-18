@@ -56,7 +56,7 @@ const Message = ({ message }) => {
       const [message] = messages.filter((message) => message.id === id);
       setSelectedMessage(message);
       setIsEditing(true);
-      showEditForm();
+      showEditForm(selectedMessage); // Pass the selectedMessage to showEditForm
     } else {
       // Add a notification that the user can only edit their own messages
       Swal.fire({
@@ -67,7 +67,7 @@ const Message = ({ message }) => {
     }
   };
 
-  const showEditForm = () => {
+  const showEditForm = (selectedMessage) => {
     Swal.fire({
       html: `
         <form id="editForm">
