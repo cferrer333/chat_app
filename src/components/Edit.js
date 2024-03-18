@@ -4,10 +4,26 @@ import Swal from 'sweetalert2';
 import { doc, setDoc } from "firebase/firestore"; 
 import { db } from "../firebase";
 
+
 const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessages }) => {
   const id = selectedMessage ? selectedMessage.id : null;
 
   const [text, setText] = useState(selectedMessage ? selectedMessage.text : '');
+
+  
+  const handleEdit = (id) => {
+    if (message.uid === user.uid) {
+      const [message] = messages.filter((message) => message.id === id);
+      setSelectedMessage(message);
+    } else {
+      // Add a notification that the user can only edit their own messages
+      Swal.fire({
+        icon: 'error',
+        title: 'Permission denied',
+        text: 'You can only edit your own messages.',
+      });
+    }
+  };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -69,9 +85,15 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
     });
   };
 
+  const handleEditAndShowForm = (id) => {
+    handleEdit(id);
+    showEditForm();
+  };
+  
+
   return (
     <div className="small-container">
-      <button onClick="handleEdit(message.id); showEditForm()">Edit</button>
+      <button onClick={() => handleEditAndShowForm(message.id)}>Edit</button>
     </div>
   );
 };
