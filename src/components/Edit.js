@@ -5,7 +5,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessages }) => {
-  const id = selectedMessage.id || null;
+  const id = selectedMessage ? selectedMessage.id : null;
 
   const [text, setText] = useState(selectedMessage.text);
 
