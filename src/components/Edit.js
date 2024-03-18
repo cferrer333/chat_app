@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
 import { doc, updateDoc } from "firebase/firestore"; 
-import { db } from '../../config/firestore';
+import { db } from "../firebase";
 
 const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessages }) => {
   const id = selectedMessage.id;

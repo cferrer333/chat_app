@@ -3,7 +3,7 @@ import Swal from "sweetalert2"
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
-import { deleteDoc, doc, collection, query, orderBy, limit, onSnapshot, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, collection, query, orderBy, limit, onSnapshot, updateDoc, getDocs } from "firebase/firestore";
 import Edit from "./Edit";
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
@@ -74,7 +74,6 @@ const Message = ({ message }) => {
       const [message] = messages.filter((message) => message.id === id);
       setSelectedMessage(message);
       setIsEditing(true);
-      showEditForm(selectedMessage); // Pass the selectedMessage to showEditForm
     } else {
       // Add a notification that the user can only edit their own messages
       Swal.fire({
