@@ -7,7 +7,7 @@ import { db } from "../firebase";
 const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessages }) => {
   const id = selectedMessage ? selectedMessage.id : null;
 
-  const [text, setText] = useState(selectedMessage.text);
+  const [text, setText] = useState(selectedMessage ? selectedMessage.text : '');
 
   const handleUpdate = async (e) => {
     e.preventDefault();
