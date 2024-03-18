@@ -45,13 +45,13 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
   const showEditForm = () => {
     Swal.fire({
       html: `
-        <form id="editForm" onSubmit={handleUpdate}>
+        <form id="editForm" onSubmit=${handleUpdate}>
           <label for="messageInput">Edit Message</label>
           <input id="messageInput" 
           type="text" 
           class="swal2-input" 
-          value={text}
-          onChange={e => setText(e.target.value)} 
+          value="${text}"
+          onChange=${e => setText(e.target.value)} 
           />
         </form>
       `,
