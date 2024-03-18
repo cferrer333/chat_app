@@ -182,7 +182,12 @@ const Message = ({ message }) => {
         >
           x
         </button>
-        <Edit/>
+        <Edit 
+        message={message} 
+        messages={messages} 
+        setMessages={setMessages} 
+        getMessages={getMessages} 
+        setIsEditing={setIsEditing}/>
         
       </div>
     </div>
