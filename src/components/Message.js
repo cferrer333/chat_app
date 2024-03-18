@@ -72,9 +72,8 @@ const Message = ({ message }) => {
       html: `
         <form id="editForm">
           <label for="messageInput">Edit Message</label>
-          <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage.text}" placeholder="Edit Message" />
-        </form>
-      `,
+          <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage.text}" placeholder="Edit Message" onchange="handleChange(event)" />
+        </form>`,
       showCancelButton: true,
       showCloseButton: true,
       focusConfirm: false,
@@ -87,6 +86,11 @@ const Message = ({ message }) => {
         handleUpdate(result.event); // Pass the event parameter to handleUpdate
       }
     });
+  };
+  
+  // Add this function to handle input changes
+  function handleChange(event) {
+    setText(event.target.value);
   }
   const handleDelete = (id) => {
     if (message.uid === user.uid) {
