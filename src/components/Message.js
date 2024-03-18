@@ -182,13 +182,7 @@ const Message = ({ message }) => {
         >
           x
         </button>
-        <button
-          className="edit-message"
-          onClick={() => handleEdit(message.id)}
-        >
-          Edit
-        </button>
-        
+        <Edit messages={messages} selectedMessage={selectedMessage} setMessages={setMessages} setIsEditing={setIsEditing} getMessages={getMessages} />
       </div>
     </div>
   );

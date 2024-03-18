@@ -71,7 +71,7 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
 
   return (
     <div className="small-container">
-      <button onClick={showEditForm}>Edit</button>
+      <button onClick="handleEdit(message.id); showEditForm()">Edit</button>
     </div>
   );
 };
