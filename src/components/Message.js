@@ -70,7 +70,7 @@ const Message = ({ message }) => {
   const showEditForm = () => {
     Swal.fire({
       html: `
-        <form id="editForm" onSubmit="${(event) => handleUpdate(event)}">
+        <form id="editForm">
           <label for="messageInput">Edit Message</label>
           <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage.text}" placeholder="Edit Message" />
         </form>
@@ -84,7 +84,7 @@ const Message = ({ message }) => {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        handleUpdate();
+        handleUpdate(result.event); // Pass the event parameter to handleUpdate
       }
     });
   }
