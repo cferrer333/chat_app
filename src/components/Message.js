@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
 import { deleteDoc, doc, collection, query, orderBy, limit, onSnapshot, updateDoc } from "firebase/firestore";
-
+import Edit from "./Edit";
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
   const [messages, setMessages] = useState([]);
@@ -13,42 +13,60 @@ const Message = ({ message }) => {
   const [text, setText] = useState(selectedMessage ? selectedMessage.text : '');
 
   const scroll = useRef();
-  
-  const id = selectedMessage ? selectedMessage.id : null;
 
-  const handleUpdate = async (event) => {
-    if (event) {
-      event.preventDefault();
-    }
-
-    if (!text) {
-      return Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'Input required.',
-        showConfirmButton: true,
-      });
-    }
-
-    const message = {
-      text: text,
-    };
-
-    await updateDoc(doc(db, "messages", id), {
-      ...message
+  const getMessages = async () => {
+    const q = query(
+      collection(db, "messages"),
+      orderBy("createdAt", "desc"),
+      limit(50)
+    );
+    const querySnapshot = await getDocs(q);
+    const messages = [];
+    querySnapshot.forEach((doc) => {
+      messages.push({ ...doc.data(), id: doc.id });
     });
-
     setMessages(messages);
-    setIsEditing(false);
+  }
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Updated!',
-      text: 'Message has been updated.',
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
+  useEffect(() => {
+    getMessages();
+  })
+  
+  // const id = selectedMessage ? selectedMessage.id : null;
+
+  // const handleUpdate = async (event) => {
+  //   if (event) {
+  //     event.preventDefault();
+  //   }
+
+  //   if (!text) {
+  //     return Swal.fire({
+  //       icon: 'error',
+  //       title: 'Error!',
+  //       text: 'Input required.',
+  //       showConfirmButton: true,
+  //     });
+  //   }
+
+  //   const message = {
+  //     text: text,
+  //   };
+
+  //   await updateDoc(doc(db, "messages", id), {
+  //     ...message
+  //   });
+
+  //   setMessages(messages);
+  //   setIsEditing(false);
+
+  //   Swal.fire({
+  //     icon: 'success',
+  //     title: 'Updated!',
+  //     text: 'Message has been updated.',
+  //     showConfirmButton: false,
+  //     timer: 1500,
+  //   });
+  // };
 
 
   const handleEdit = (id) => {
@@ -67,31 +85,31 @@ const Message = ({ message }) => {
     }
   };
 
-  const showEditForm = (selectedMessage) => {
-    Swal.fire({
-      html: `
-        <form id="editForm">
-          <label for="messageInput">Edit Message</label>
-          <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage.text}" placeholder="Edit Message" onchange="handleChange(event)" />
-        </form>`,
-      showCancelButton: true,
-      showCloseButton: true,
-      focusConfirm: false,
-      preConfirm: () => {
-        const newText = document.getElementById('messageInput').value;
-        setSelectedMessage({ ...selectedMessage, text: newText });
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleUpdate(result.event); // Pass the event parameter to handleUpdate
-      }
-    });
-  };
+  // const showEditForm = (selectedMessage) => {
+  //   Swal.fire({
+  //     html: `
+  //       <form id="editForm">
+  //         <label for="messageInput">Edit Message</label>
+  //         <input id="messageInput" type="text" class="swal2-input" value="${selectedMessage.text}" placeholder="Edit Message" onchange="handleChange(event)" />
+  //       </form>`,
+  //     showCancelButton: true,
+  //     showCloseButton: true,
+  //     focusConfirm: false,
+  //     preConfirm: () => {
+  //       const newText = document.getElementById('messageInput').value;
+  //       setSelectedMessage({ ...selectedMessage, text: newText });
+  //     }
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       handleUpdate(result.event); // Pass the event parameter to handleUpdate
+  //     }
+  //   });
+  // };
   
   // Add this function to handle input changes
-  function handleChange(event) {
-    setText(event.target.value);
-  }
+  // function handleChange(event) {
+  //   setText(event.target.value);
+  // }
   const handleDelete = (id) => {
     if (message.uid === user.uid) {
       Swal.fire({
@@ -166,13 +184,7 @@ const Message = ({ message }) => {
         >
           x
         </button>
-        <button
-          className="edit-message"
-          onClick={() => handleEdit(message.id)}
-        >
-          Edit
-        </button>
-
+        <Edit/>
         
       </div>
     </div>

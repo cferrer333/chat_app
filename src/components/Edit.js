@@ -45,9 +45,14 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
   const showEditForm = () => {
     Swal.fire({
       html: `
-        <form id="editForm" onSubmit="return false;">
+        <form id="editForm" onSubmit={handleUpdate}>
           <label for="messageInput">Edit Message</label>
-          <input id="messageInput" type="text" class="swal2-input" value="${text}" />
+          <input id="messageInput" 
+          type="text" 
+          class="swal2-input" 
+          value={text}
+          onChange={e => setText(e.target.value)} 
+          />
         </form>
       `,
       showCancelButton: true,
@@ -66,7 +71,7 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
 
   return (
     <div className="small-container">
-      <button onClick={showEditForm}>Edit Message</button>
+      <button onClick={showEditForm}>Edit</button>
     </div>
   );
 };
