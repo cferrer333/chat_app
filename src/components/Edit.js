@@ -62,6 +62,7 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
 
   return (
     <div className="small-container">
+      <br />
       <form onSubmit={handleUpdate}>
         <label htmlFor="firstName">Edit Message</label>
         <input
