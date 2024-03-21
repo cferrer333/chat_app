@@ -154,14 +154,14 @@ input {
 .toggle-toolbar {
   position: absolute;
   top: 5px;
-  right: 5px;
+  right: 8px;
   cursor: pointer;
 }
 
 .toolbar-menu {
   position: absolute;
   top: 30px; /* Adjust as needed */
-  right: 5px;
+  right: 8px;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
   padding: 5px;
