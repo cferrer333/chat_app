@@ -64,18 +64,20 @@ const Message = ({ message }) => {
 
   const showEditForm = () => {
     Swal.fire({
-      html: (
-        <form id="editForm" onSubmit={handleUpdate}>
-          <label htmlFor="messageInput">Edit Message</label>
-          <input
-            id="messageInput"
-            type="text"
-            className="swal2-input"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-        </form>
-      ),
+      html: `
+      <form id="editForm" onSubmit={handleUpdate}>
+        <label for="messageInput">Edit Message</label>
+        <input id="messageInput" 
+          type="text" 
+          class="swal2-input" 
+          value="${text}"
+          onChange=${(e) => {
+            setText(e.target.value);
+            console.log(text);
+          }} 
+        />
+      </form>
+    `,
       showCancelButton: true,
       showCloseButton: true,
       focusConfirm: false,
