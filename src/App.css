@@ -160,8 +160,9 @@ input {
 /* toggle toolbar */
 .toggle-toolbar {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  top: 5px;
+  right: 10px;
+  padding: 5px;
   cursor: pointer;
   opacity: 0; /* Initially hidden */
   transition: opacity 0.3s; /* Smooth transition for showing */
@@ -173,7 +174,7 @@ input {
 
 .toolbar-menu {
   position: absolute;
-  bottom: 30px; /* Adjust as needed */
+  top: 30px; /* Adjust as needed */
   right: 5px;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
