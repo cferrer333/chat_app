@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, updateDoc } from "firebase/firestore"; 
 import { db } from "../firebase";
 
 
@@ -43,7 +43,7 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
       text: text,
     };
 
-    await setDoc(doc(db, "messages", id), {
+    await updateDoc(doc(db, "messages", id), {
       ...message
     });
 
