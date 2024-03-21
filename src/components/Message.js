@@ -32,7 +32,7 @@ const Message = ({ message }) => {
 
   const handleUpdate = async (e) => {
     // e.preventDefault();
-    console.log(text);
+    console.log(e);
     // if (!text) {
     //   return Swal.fire({
     //     icon: 'error',
@@ -87,7 +87,7 @@ const Message = ({ message }) => {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        handleUpdate();
+        handleUpdate(result.value);
       }
     });
   };
