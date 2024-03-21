@@ -201,7 +201,7 @@ const Message = ({ message }) => {
         </p>
         <p className="user-message">{message.text}</p>
         <p className="toggle-toolbar" onClick={toggleToolbar}>
-        <i class="fa-regular fa-ellipsis-vertical"></i>
+        <i class="fa-solid fa-ellipsis-vertical"></i>
         </p>
         {isToolbarOpen && (
           <div className="toolbar-menu">
