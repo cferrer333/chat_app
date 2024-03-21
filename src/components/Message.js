@@ -10,6 +10,7 @@ const Message = ({ message }) => {
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isToolbarOpen, setIsToolbarOpen] = useState(false);
 
   const id = selectedMessage ? selectedMessage.id : null;
 
@@ -176,35 +177,40 @@ const Message = ({ message }) => {
     });
     return () => unsubscribe;
   }, []);
+  
+  const toggleToolbar = () => {
+    setIsToolbarOpen(!isToolbarOpen);
+  };
 
   return (
-    <div
-      className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
+    <div className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
       <img
         className="chat-bubble__left"
         src={message.avatar}
         alt="user avatar"
       />
       <div className="chat-bubble__right">
-        <p className="user-name">{message.name} &nbsp; <span className="message-time">{message.createdAt && message.createdAt.seconds && (
-      new Date(message.createdAt.seconds * 1000).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })
-    )}</span> </p>
+        <p className="user-name">
+          {message.name} &nbsp;
+          <span className="message-time">
+            {message.createdAt &&
+              message.createdAt.seconds && (
+                new Date(message.createdAt.seconds * 1000).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })
+              )}
+          </span>
+        </p>
         <p className="user-message">{message.text}</p>
-        <button
-          className="delete-message"
-          onClick={() => handleDelete(message.id)}
-        >
-          x
+        <button className="toggle-toolbar" onClick={toggleToolbar}>
+        <i class="fa-solid fa-ellipsis"></i>
         </button>
-        <button onClick={() => handleEdit(message.id)}>Edit</button>
-        { isEditing && (
-        <Edit
-        messages={messages}
-        selectedMessage={selectedMessage}
-        setMessages={setMessages}
-        setIsEditing={setIsEditing}
-        getMessages={getMessages}/>
-      )}
+        {isToolbarOpen && (
+          <div className="toolbar-menu">
+            <button className="delete-message" onClick={() => handleDelete(message.id)}>
+              Delete
+            </button>
+            <button onClick={() => handleEdit(message.id)}>Edit</button>
+          </div>
+        )}
       </div>
     </div>
   );
