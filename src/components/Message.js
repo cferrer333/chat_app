@@ -63,30 +63,30 @@ const Message = ({ message }) => {
   };
 
   const showEditForm = () => {
+    const inputElement = document.createElement('input');
+    inputElement.id = 'messageInput';
+    inputElement.type = 'text';
+    inputElement.className = 'swal2-input';
+    inputElement.value = text;
+    inputElement.addEventListener('input', (e) => {
+      setText(e.target.value);
+    });
+  
+    const form = document.createElement('form');
+    form.id = 'editForm';
+    form.addEventListener('submit', handleUpdate);
+    form.appendChild(document.createTextNode('Edit Message'));
+    form.appendChild(inputElement);
+  
     Swal.fire({
-      html: `
-        <form id="editForm" onSubmit={handleUpdate}>
-          <label for="messageInput">Edit Message</label>
-          <input id="messageInput" 
-            type="text" 
-            class="swal2-input" 
-            value="${text}"
-            onChange=${(e) => {
-              setText(e.target.value);
-            }} 
-          />
-        </form>
-      `,
+      html: form,
       showCancelButton: true,
       showCloseButton: true,
       focusConfirm: false,
       preConfirm: () => {
-        const inputElement = document.getElementById('messageInput');
-        if (inputElement) {
-          const newText = inputElement.value;
-          setText(newText);
-          console.log(newText);
-        }
+        const newText = inputElement.value;
+        setText(newText);
+        console.log(newText);
       }
     }).then((result) => {
       if (result.isConfirmed) {
