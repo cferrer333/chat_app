@@ -200,9 +200,9 @@ const Message = ({ message }) => {
           </span>
         </p>
         <p className="user-message">{message.text}</p>
-        <button className="toggle-toolbar" onClick={toggleToolbar}>
+        <p className="toggle-toolbar" onClick={toggleToolbar}>
         <i class="fa-solid fa-ellipsis"></i>
-        </button>
+        </p>
         {isToolbarOpen && (
           <div className="toolbar-menu">
             <button className="delete-message" onClick={() => handleDelete(message.id)}>
