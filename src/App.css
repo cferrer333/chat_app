@@ -84,7 +84,7 @@ input {
   margin-bottom: 60px;
 }
 .chat-bubble {
-  position: absolute;
+  position: relative;
   border-radius: 20px 20px 20px 0;
   padding: 15px;
   background-color: #7cc5d9;
@@ -168,6 +168,7 @@ input {
   display: flex;
   flex-direction: column;
 }
+
 .send-message > button {
   width: 70px;
   height: 40px;
