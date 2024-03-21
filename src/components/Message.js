@@ -65,34 +65,34 @@ const Message = ({ message }) => {
   const showEditForm = () => {
     Swal.fire({
       html: `
-      <form id="editForm" onSubmit={handleUpdate}>
-        <label for="messageInput">Edit Message</label>
-        <input id="messageInput" 
-          type="text" 
-          class="swal2-input" 
-          value="${text}"
-          onChange=${(e) => {
-            setText(e.target.value);
-            console.log(text);
-          }} 
-        />
-      </form>
-    `,
+        <form id="editForm" onSubmit={handleUpdate}>
+          <label for="messageInput">Edit Message</label>
+          <input id="messageInput" 
+            type="text" 
+            class="swal2-input" 
+            value="${text}"
+            onChange=${(e) => {
+              setText(e.target.value);
+            }} 
+          />
+        </form>
+      `,
       showCancelButton: true,
       showCloseButton: true,
       focusConfirm: false,
       preConfirm: () => {
-        const newText = document.getElementById('messageInput').value;
-        setText(newText);
+        const inputElement = document.getElementById('messageInput');
+        if (inputElement) {
+          const newText = inputElement.value;
+          setText(newText);
+          console.log(newText);
+        }
       }
     }).then((result) => {
       if (result.isConfirmed) {
         console.log(text);
-        handleUpdate(text);
+        handleUpdate(); // Assuming handleUpdate does not need any arguments
       }
-    });
-  };
-
   const handleEditAndShowForm = (id) => {
     handleEdit(id);
     showEditForm();
