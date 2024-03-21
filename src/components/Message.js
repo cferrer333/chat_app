@@ -31,16 +31,16 @@ const Message = ({ message }) => {
   };
 
   const handleUpdate = async (e) => {
-    e.preventDefault();
-
-    if (!text) {
-      return Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'Input required.',
-        showConfirmButton: true,
-      });
-    }
+    // e.preventDefault();
+    console.log(text);
+    // if (!text) {
+    //   return Swal.fire({
+    //     icon: 'error',
+    //     title: 'Error!',
+    //     text: 'Input required.',
+    //     showConfirmButton: true,
+    //   });
+    // }
 
     const message = {
       text: text,
