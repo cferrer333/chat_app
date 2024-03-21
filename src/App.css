@@ -84,6 +84,7 @@ input {
   margin-bottom: 60px;
 }
 .chat-bubble {
+  position: absolute;
   border-radius: 20px 20px 20px 0;
   padding: 15px;
   background-color: #7cc5d9;
