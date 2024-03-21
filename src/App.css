@@ -95,7 +95,9 @@ input {
   display: flex;
   align-items: flex-start;
   margin-bottom: 20px;
+  transition: background-color 0.3s; /* Smooth transition for highlighting */
 }
+
 .chat-bubble.right {
   margin-left: auto;
   border-radius: 20px 20px 0 20px;
@@ -151,17 +153,28 @@ input {
   border-bottom: 1px solid #7cc5d9;
 }
 
+.chat-bubble:hover {
+  background-color: #88dded; /* Highlight color on hover */
+}
+
+/* toggle toolbar */
 .toggle-toolbar {
   position: absolute;
-  top: 5px;
-  right: 8px;
+  bottom: 5px;
+  right: 5px;
   cursor: pointer;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s; /* Smooth transition for showing */
+}
+
+.chat-bubble:hover .toggle-toolbar {
+  opacity: 1; /* Show toggle-toolbar on chat-bubble hover */
 }
 
 .toolbar-menu {
   position: absolute;
-  top: 30px; /* Adjust as needed */
-  right: 8px;
+  bottom: 30px; /* Adjust as needed */
+  right: 5px;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
   padding: 5px;
