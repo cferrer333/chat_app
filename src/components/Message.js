@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db } from "../firebase";
 import { deleteDoc, doc, collection, query, orderBy, limit, onSnapshot, setDoc, getDocs } from "firebase/firestore";
-// import Edit from "./Edit";
+import Edit from "./Edit";
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
   const [messages, setMessages] = useState([]);
@@ -12,7 +12,7 @@ const Message = ({ message }) => {
 
   const id = selectedMessage ? selectedMessage.id : null;
 
-  const [text, setText] = useState(selectedMessage ? selectedMessage.text : '');
+  const [text, setText] = useState(selectedMessage.text);
 
   const scroll = useRef();
 
@@ -30,9 +30,9 @@ const Message = ({ message }) => {
     }
   };
 
-  const handleUpdate = async (e) => {
+  // const handleUpdate = async (e) => {
     // e.preventDefault();
-    console.log(e);
+    // console.log(e);
     // if (!text) {
     //   return Swal.fire({
     //     icon: 'error',
@@ -42,9 +42,9 @@ const Message = ({ message }) => {
     //   });
     // }
 
-    const message = {
-      text: text,
-    };
+    // const message = {
+    //   text: text,
+    // };
 
     // await setDoc(doc(db, "messages", id), {
     //   ...message
@@ -53,53 +53,53 @@ const Message = ({ message }) => {
     // setMessages(messages);
     // getMessages();
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Updated!',
-      text: 'Message has been updated.',
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
+  //   Swal.fire({
+  //     icon: 'success',
+  //     title: 'Updated!',
+  //     text: 'Message has been updated.',
+  //     showConfirmButton: false,
+  //     timer: 1500,
+  //   });
+  // };
 
-  const showEditForm = () => {
-    const inputElement = document.createElement('input');
-    inputElement.id = 'messageInput';
-    inputElement.type = 'text';
-    inputElement.className = 'swal2-input';
-    inputElement.value = text;
-    inputElement.addEventListener('input', (e) => {
-      setText(e.target.value);
-    });
+  // const showEditForm = () => {
+  //   const inputElement = document.createElement('input');
+  //   inputElement.id = 'messageInput';
+  //   inputElement.type = 'text';
+  //   inputElement.className = 'swal2-input';
+  //   inputElement.value = text;
+  //   inputElement.addEventListener('input', (e) => {
+  //     setText(e.target.value);
+  //   });
   
-    const form = document.createElement('form');
-    form.id = 'editForm';
-    form.addEventListener('submit', handleUpdate);
-    form.appendChild(document.createTextNode('Edit Message'));
-    form.appendChild(inputElement);
+  //   const form = document.createElement('form');
+  //   form.id = 'editForm';
+  //   form.addEventListener('submit', handleUpdate);
+  //   form.appendChild(document.createTextNode('Edit Message'));
+  //   form.appendChild(inputElement);
   
-    Swal.fire({
-      html: form,
-      showCancelButton: true,
-      showCloseButton: true,
-      focusConfirm: false,
-      preConfirm: () => {
-        const newText = inputElement.value;
-        setText(newText);
-        console.log(newText);
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        console.log(text);
-        handleUpdate(); // Assuming handleUpdate does not need any arguments
-      }
-    });
-  };
+  //   Swal.fire({
+  //     html: form,
+  //     showCancelButton: true,
+  //     showCloseButton: true,
+  //     focusConfirm: false,
+  //     preConfirm: () => {
+  //       const newText = inputElement.value;
+  //       setText(newText);
+  //       console.log(newText);
+  //     }
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       console.log(text);
+  //       handleUpdate(); // Assuming handleUpdate does not need any arguments
+  //     }
+  //   });
+  // };
 
-  const handleEditAndShowForm = (id) => {
-    handleEdit(id);
-    showEditForm();
-  };
+  // const handleEditAndShowForm = (id) => {
+  //   handleEdit(id);
+  //   showEditForm();
+  // };
 
   const getMessages = async () => {
     const q = query(
@@ -194,7 +194,14 @@ const Message = ({ message }) => {
         >
           x
         </button>
-        <button onClick={() => handleEditAndShowForm(message.id)}>Edit</button>
+        { isEditing && (
+        <Edit
+        messages={messages}
+        selectedMessage={selectedMessage}
+        setMessages={setMessages}
+        setIsEditing={setIsEditing}
+        getMessages={getMessages}/>
+      )}
       </div>
     </div>
   );

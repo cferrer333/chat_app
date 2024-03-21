@@ -6,9 +6,9 @@ import { db } from "../firebase";
 
 
 const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessages }) => {
-  const id = selectedMessage ? selectedMessage.id : null;
+  const id = selectedMessage.id;
 
-  const [text, setText] = useState(selectedMessage ? selectedMessage.text : '');
+  const [text, setText] = useState(selectedMessage.text);
 
   
   const handleEdit = (id) => {
@@ -58,42 +58,28 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
     });
   };
 
-  const showEditForm = () => {
-    Swal.fire({
-      html: `
-        <form id="editForm" onSubmit={handleUpdate}>
-          <label for="messageInput">Edit Message</label>
-          <input id="messageInput" 
-          type="text" 
-          class="swal2-input" 
-          value="${text}"
-          onChange=${e => setText(e.target.value)} 
-          />
-        </form>
-      `,
-      showCancelButton: true,
-      showCloseButton: true,
-      focusConfirm: false,
-      preConfirm: () => {
-        const newText = document.getElementById('messageInput').value;
-        setText(newText);
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleUpdate();
-      }
-    });
-  };
-
-  const handleEditAndShowForm = (id) => {
-    handleEdit(id);
-    showEditForm();
-  };
-  
-
   return (
     <div className="small-container">
-      <button onClick={() => handleEditAndShowForm(message.id)}>Edit</button>
+      <form onSubmit={handleUpdate}>
+        <label htmlFor="firstName">Edit Message</label>
+        <input
+          id="messageInput"
+          type="text"
+          name="messageInput"
+          value={newText}
+          onChange={e => setText(e.target.value)}
+        />
+        <div style={{ marginTop: '30px' }}>
+          <input type="submit" value="Update" />
+          <input
+            style={{ marginLeft: '12px' }}
+            className="muted-button"
+            type="button"
+            value="Cancel"
+            onClick={() => setIsEditing(false)}
+          />
+        </div>
+      </form>
     </div>
   );
 };
