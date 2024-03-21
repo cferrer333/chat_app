@@ -9,10 +9,11 @@ const Message = ({ message }) => {
   const [user] = useAuthState(auth);
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   const id = selectedMessage ? selectedMessage.id : null;
 
-  const [text, setText] = useState(selectedMessage.text);
+  // const [text, setText] = useState(selectedMessage.text);
 
   const scroll = useRef();
 
@@ -20,6 +21,7 @@ const Message = ({ message }) => {
     if (message.uid === user.uid) {
       const [message] = messages.filter((message) => message.id === id);
       setSelectedMessage(message);
+      setIsEditing(true);
     } else {
       // Add a notification that the user can only edit their own messages
       Swal.fire({
@@ -194,6 +196,7 @@ const Message = ({ message }) => {
         >
           x
         </button>
+        <button onClick={() => handleEdit(message.id)}>Edit</button>
         { isEditing && (
         <Edit
         messages={messages}

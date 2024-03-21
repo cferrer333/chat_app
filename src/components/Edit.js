@@ -10,20 +10,22 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
 
   const [text, setText] = useState(selectedMessage.text);
 
+
+
   
-  const handleEdit = (id) => {
-    if (message.uid === user.uid) {
-      const [message] = messages.filter((message) => message.id === id);
-      setSelectedMessage(message);
-    } else {
-      // Add a notification that the user can only edit their own messages
-      Swal.fire({
-        icon: 'error',
-        title: 'Permission denied',
-        text: 'You can only edit your own messages.',
-      });
-    }
-  };
+  // const handleEdit = (id) => {
+  //   if (selectedMessage.uid === user.uid) {
+  //     const [message] = messages.filter((message) => message.id === id);
+  //     setSelectedMessage(message);
+  //   } else {
+  //     // Add a notification that the user can only edit their own messages
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Permission denied',
+  //       text: 'You can only edit your own messages.',
+  //     });
+  //   }
+  // };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -66,7 +68,7 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
           id="messageInput"
           type="text"
           name="messageInput"
-          value={newText}
+          value={text}
           onChange={e => setText(e.target.value)}
         />
         <div style={{ marginTop: '30px' }}>
