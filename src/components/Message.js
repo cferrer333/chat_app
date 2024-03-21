@@ -46,12 +46,12 @@ const Message = ({ message }) => {
       text: text,
     };
 
-    await setDoc(doc(db, "messages", id), {
-      ...message
-    });
+    // await setDoc(doc(db, "messages", id), {
+    //   ...message
+    // });
 
-    setMessages(messages);
-    getMessages();
+    // setMessages(messages);
+    // getMessages();
 
     Swal.fire({
       icon: 'success',
@@ -87,7 +87,7 @@ const Message = ({ message }) => {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        handleUpdate(result.value);
+        handleUpdate(text);
       }
     });
   };
