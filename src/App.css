@@ -167,8 +167,12 @@ input {
   opacity: 0; /* Initially hidden */
   transition: opacity 0.3s; /* Smooth transition for showing */
   border-radius: 50%; /* Add rounded border */
+  border: 1px solid #ccc; /* Add border to the toolbar */
 }
 
+.toggle-toolbar:hover {
+  background-color: #f0f0f0; /* Highlight color on hover */
+}
 .chat-bubble:hover .toggle-toolbar {
   opacity: 1; /* Show toggle-toolbar on chat-bubble hover */
 }
@@ -183,6 +187,7 @@ input {
   display: flex;
   flex-direction: column;
   border-radius: 5px; /* Add rounded border */
+  border: 1px solid #ccc;
 }
 
 .send-message > button {
