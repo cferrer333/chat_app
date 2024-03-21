@@ -93,6 +93,9 @@ const Message = ({ message }) => {
         console.log(text);
         handleUpdate(); // Assuming handleUpdate does not need any arguments
       }
+    });
+  };
+
   const handleEditAndShowForm = (id) => {
     handleEdit(id);
     showEditForm();
