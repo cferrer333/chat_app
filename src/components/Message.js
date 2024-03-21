@@ -87,6 +87,7 @@ const Message = ({ message }) => {
       }
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log(text);
         handleUpdate(text);
       }
     });
