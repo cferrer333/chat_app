@@ -220,7 +220,8 @@ const Message = ({ message }) => {
         <i class="fa-solid fa-ellipsis-vertical"></i>
         </p>
         {isToolbarOpen && (
-          <div className="toolbar-menu">
+          <div className="toolbar-menu" onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave} >
             <button className="delete-message" onClick={() => handleDelete(message.id)}>
               Delete
             </button>
