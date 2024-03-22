@@ -178,9 +178,9 @@ const Message = ({ message }) => {
     return () => unsubscribe;
   }, []);
   
-  const toggleToolbar = () => {
-    setIsToolbarOpen(!isToolbarOpen);
-  };
+  // const toggleToolbar = () => {
+  //   setIsToolbarOpen(!isToolbarOpen);
+  // };
 
   return (
     <div className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
@@ -200,20 +200,20 @@ const Message = ({ message }) => {
           </span>
         </p>
         <p className="user-message">{message.text}</p>
-        <p className="toggle-toolbar" onClick={toggleToolbar}>
+        {/* <p className="toggle-toolbar" onClick={toggleToolbar}> */}
         <i class="fa-solid fa-ellipsis-vertical"></i>
         </p>
-        {isToolbarOpen && (
-          <div className="toolbar-menu">
+        {/* {isToolbarOpen && (
+          <div className="toolbar-menu"> */}
             <button className="delete-message" onClick={() => handleDelete(message.id)}>
               Delete
             </button>
             <button onClick={() => handleEdit(message.id)}>Edit</button>
           </div>
         )}
-      </div>
-    </div>
-  );
-};
+//       </div>
+//     </div>
+//   );
+// };
 
 export default Message;
