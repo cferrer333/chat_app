@@ -71,7 +71,7 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
           name="messageInput"
           value={text}
           onChange={e => setText(e.target.value)}
-          style={{ width: '300px', height: '50px' }}
+          style={{ width: '400px', height: '100px' }}
         />
         <div style={{ marginTop: '30px' }}>
           <input type="submit" value="Update" />
