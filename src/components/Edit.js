@@ -64,13 +64,14 @@ const Edit = ({ messages, selectedMessage, setMessages, setIsEditing, getMessage
     <div className="small-container">
       <br />
       <form onSubmit={handleUpdate}>
-        <label htmlFor="firstName">Edit Message</label>
+        <label htmlFor="messageInput">Edit Message</label>
         <input
           id="messageInput"
           type="text"
           name="messageInput"
           value={text}
           onChange={e => setText(e.target.value)}
+          style={{ width: '300px', height: '50px' }}
         />
         <div style={{ marginTop: '30px' }}>
           <input type="submit" value="Update" />
