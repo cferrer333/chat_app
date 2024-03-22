@@ -11,6 +11,7 @@ const Message = ({ message }) => {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isToolbarOpen, setIsToolbarOpen] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(false);
 
   const id = selectedMessage ? selectedMessage.id : null;
 
@@ -178,10 +179,14 @@ const Message = ({ message }) => {
     return () => unsubscribe;
   }, []);
   
-  // const toggleToolbar = () => {
-  //   setIsToolbarOpen(!isToolbarOpen);
-  // };
 
+  const userAuthor = message.uid === user.uid;
+
+  const confirmAuthor = () => {
+    if (!userAuthor) {
+      setIsAuthor(false)
+    }
+  }
   const handleMouseEnter = () => {
     setIsToolbarOpen(true);
   };
@@ -214,7 +219,7 @@ const Message = ({ message }) => {
             setMessages={setMessages} 
             getMessages={getMessages} 
             setIsEditing={setIsEditing} /> )}
-        <p className="toggle-toolbar"
+        { isAuthor && ( <p className="toggle-toolbar"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave} >
         <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -227,7 +232,7 @@ const Message = ({ message }) => {
             </button>
             <button onClick={() => handleEdit(message.id)}>Edit</button>
           </div>
-        )}
+        )})}
       </div>
     </div>
   );
