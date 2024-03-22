@@ -219,7 +219,7 @@ const Message = ({ message }) => {
             setMessages={setMessages} 
             getMessages={getMessages} 
             setIsEditing={setIsEditing} /> )}
-        { isEditing && ( <p className="toggle-toolbar"
+        { isAuthor && ( <p className="toggle-toolbar"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave} >
         <i class="fa-solid fa-ellipsis-vertical"></i>
