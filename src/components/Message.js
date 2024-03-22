@@ -190,9 +190,7 @@ const Message = ({ message }) => {
     setIsToolbarOpen(false);
   };
   return (
-    <div className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}
-    onMouseEnter={handleMouseEnter}
-    onMouseLeave={handleMouseLeave}>
+    <div className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
       <img
         className="chat-bubble__left"
         src={message.avatar}
@@ -216,7 +214,9 @@ const Message = ({ message }) => {
             setMessages={setMessages} 
             getMessages={getMessages} 
             setIsEditing={setIsEditing} /> )}
-        <p className="toggle-toolbar" >
+        <p className="toggle-toolbar"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave} >
         <i class="fa-solid fa-ellipsis-vertical"></i>
         </p>
         {isToolbarOpen && (
