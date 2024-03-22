@@ -216,7 +216,7 @@ const Message = ({ message }) => {
             setMessages={setMessages} 
             getMessages={getMessages} 
             setIsEditing={setIsEditing} /> )}
-        <p className="toggle-toolbar" onClick={toggleToolbar}>
+        <p className="toggle-toolbar" >
         <i class="fa-solid fa-ellipsis-vertical"></i>
         </p>
         {isToolbarOpen && (
