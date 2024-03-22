@@ -178,12 +178,21 @@ const Message = ({ message }) => {
     return () => unsubscribe;
   }, []);
   
-  const toggleToolbar = () => {
-    setIsToolbarOpen(!isToolbarOpen);
-  };
+  // const toggleToolbar = () => {
+  //   setIsToolbarOpen(!isToolbarOpen);
+  // };
 
+  const handleMouseEnter = () => {
+    setIsToolbarOpen(true);
+  };
+  
+  const handleMouseLeave = () => {
+    setIsToolbarOpen(false);
+  };
   return (
-    <div className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
+    <div className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}
+    onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}>
       <img
         className="chat-bubble__left"
         src={message.avatar}
