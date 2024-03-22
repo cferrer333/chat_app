@@ -219,12 +219,12 @@ const Message = ({ message }) => {
             setMessages={setMessages} 
             getMessages={getMessages} 
             setIsEditing={setIsEditing} /> )}
-        { isAuthor && ( <p className="toggle-toolbar"
+        { isEditing && ( <p className="toggle-toolbar"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave} >
         <i class="fa-solid fa-ellipsis-vertical"></i>
-        </p>
-        {isToolbarOpen && (
+        </p> )}
+        { isToolbarOpen && (
           <div className="toolbar-menu" onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave} >
             <button className="delete-message" onClick={() => handleDelete(message.id)}>
@@ -232,7 +232,7 @@ const Message = ({ message }) => {
             </button>
             <button onClick={() => handleEdit(message.id)}>Edit</button>
           </div>
-        )})}
+        )}
       </div>
     </div>
   );
