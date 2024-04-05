@@ -26,7 +26,7 @@ const SendMessage = ({ scroll }) => {
     const { uid, displayName, photoURL } = auth.currentUser;
 
     await addDoc(collection(db, "messages"), {
-      text: message ? message : quote.quote,
+      text: message ? message : `${quote.quote} - ${quote.author}`,
       name: displayName,
       avatar: photoURL,
       createdAt: serverTimestamp(),
