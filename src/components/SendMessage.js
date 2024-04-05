@@ -59,7 +59,7 @@ const SendMessage = ({ scroll }) => {
         type="text"
         className="form-input__input"
         placeholder="type message..."
-        value={[message || quote.quote ]}
+        value={[message || `${quote.quote} + " - " + ${quote.author}`]}
         onChange={(e) => setMessage(e.target.value)}
       />
       <button type="submit"><i class="fa-regular fa-paper-plane"></i></button>
