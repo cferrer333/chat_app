@@ -26,7 +26,7 @@ const SendMessage = ({ scroll }) => {
     const { uid, displayName, photoURL } = auth.currentUser;
 
     await addDoc(collection(db, "messages"), {
-      text: message ? message : `"${quote.quote}"  -${quote.author}`,
+      text: message ? message : `${quote.quote} - ${quote.author}`,
       name: displayName,
       avatar: photoURL,
       createdAt: serverTimestamp(),
@@ -59,7 +59,7 @@ const SendMessage = ({ scroll }) => {
         type="text"
         className="form-input__input"
         placeholder="type message..."
-        value={[message ? message : (quote ?`"${quote.quote}"  -${quote.author}` : "")]}
+        value={[message || quote.quote ]}
         onChange={(e) => setMessage(e.target.value)}
       />
       <button type="submit"><i class="fa-regular fa-paper-plane"></i></button>
