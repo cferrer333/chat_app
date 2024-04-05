@@ -8,7 +8,6 @@ import {
   limit,
   deleteDoc,
   doc,
-  getDocs
 } from "firebase/firestore";
 import { db } from "../firebase";
 import Message from "./Message";
